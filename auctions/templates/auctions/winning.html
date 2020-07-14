@@ -1,0 +1,13 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% for itemWon in ItemWonArray %}
+        {% for item in itemWon %}
+            {{ item.listing.title }}
+            {{ item.listing.description }}
+            {{ item.listing.image }}
+        {% endfor %}
+    {% endfor %}
+
+{% endblock %}

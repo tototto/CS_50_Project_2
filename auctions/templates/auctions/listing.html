@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if Message %}
+        {{ Message }}
+    {% endif %}
+    {% for item in listing %}
+        {{ item.title }}
+        <form action="{% url 'addWatchlist' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" value="{{ user.username }}" hidden>
+            <button type="submit" class="btn btn-primary" name="itemName" value="{{ item.title }}">
+                Add to Watch List
+            </button>
+        </form>
+        <form action="{% url 'AddBid' %}" method="POST">
+            {% csrf_token %}
+            {{ biddingBox }}
+            <button type="submit" name="itemName" value="{{ item.title }}" >Submit Bid</button>
+        </form>
+        <form action="{% url 'Comments' %}" method="POST">
+            {% csrf_token %}
+            {{ commentBox }}
+            <button type="submit" name="itemName" value="{{ item.title }}" >Submit Bid</button>
+        </form>
+        {% if deleteButton %}
+            <form action="{% url 'closeListing' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" name="itemName" value="{{ item.title }}">Close Listing</button>
+            </form>
+        {% endif %}
+        {{ item.description }}
+        {{ item.startingBid }}
+        {% for comment in comments %}
+            {{comment.comments}}
+        {% endfor %}
+        <img src={{item.image}} >
+    {% endfor %}
+{% endblock %}

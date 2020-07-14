@@ -1,0 +1,28 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Create Listing</h2>
+
+    {% if createSucessMsg %}
+        <h4>{{ createSucessMsg }}</h4>
+    {% endif %}
+
+    <form action="{% url 'create' %}" method="POST">
+        {% csrf_token %}
+        <table style="margin: 20px;" >
+            {{ CreateForm }}
+
+                <select name="category">
+                    {% for category in Categories %}
+                        <option value={{category}}>{{category}}</option>
+                    {% endfor %}
+                </select>
+
+        </table>
+
+        <input type="text" name='username' value="{{ request.user.username }}" hidden>
+        <button type="submit" class="btn btn-success" style="width: 200px; height: 40px;">
+            Create Listing
+        </button>
+    </form>
+{% endblock %}

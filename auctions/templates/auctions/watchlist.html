@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h1>Your Watch List</h1>
+    <ul>
+    {% for attribute in Item %}
+        <li><a href="{% url 'item' attribute.listing.title %}">{{attribute.listing.title}}</a></li>
+        <li>{{attribute.listing.description}}</li>
+        <li>{{attribute.listing.startingBid}}</li>
+        <li><img src="{{attribute.listing.image}}"></li>
+        <li>{{attribute.listing.date}}</li>
+        <li>{{attribute.listing.category}}</li>
+
+        <form action="{% url 'deleteWatchlist' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" name="WatchlistItem" value="{{attribute.listing.title}}" class="btn btn-danger">
+                Delete
+            </button>
+        </form>
+    {% endfor %}
+    </ul>   
+{% endblock %}
